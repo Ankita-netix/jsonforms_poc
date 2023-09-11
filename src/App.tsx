@@ -1,7 +1,6 @@
 import { Fragment, useState, useMemo } from 'react';
 import { JsonForms } from '@jsonforms/react';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import './App.css';
 import schema from './schema.json';
@@ -15,6 +14,8 @@ import ratingControlTester from './ratingControlTester';
 import { makeStyles } from '@mui/styles';
 import qrControlTester from './QR/qrControlTester';
 import QrControl from './QR/QrControl';
+import cameraControlTester from './Camera/cameraControlTester';
+import CameraControl from './Camera/CameraControl';
 
 const useStyles = makeStyles({
   container: {
@@ -48,7 +49,8 @@ const initialData = {
   done: true,
   recurrence: 'Daily',
   rating: 3,
-  qrCode: '',
+  qr_code: '',
+  img_input: '',
 };
 
 const renderers = [
@@ -56,16 +58,22 @@ const renderers = [
   //register custom renderers
   { tester: ratingControlTester, renderer: RatingControl },
   { tester: qrControlTester, renderer: QrControl },
+  { tester: cameraControlTester, renderer: CameraControl },
 ];
 
 const App = () => {
   const classes = useStyles();
   const [data, setData] = useState<any>(initialData);
-  const stringifiedData = useMemo(() => JSON.stringify(data, null, 2), [data]);
+  const stringifiedData = useMemo(() => {
+    const img_input = data.img_input;
+    const updatedData = {
+      ...data,
+      img_input:
+        img_input.length > 25 ? img_input.substring(0, 25) + '...' : img_input,
+    };
 
-  const clearData = () => {
-    setData({});
-  };
+    return JSON.stringify(updatedData, null, 2);
+  }, [data]);
 
   return (
     <Fragment>
@@ -82,14 +90,6 @@ const App = () => {
           <div className={classes.dataContent}>
             <pre id='boundData'>{stringifiedData}</pre>
           </div>
-          <Button
-            className={classes.resetButton}
-            onClick={clearData}
-            color='primary'
-            variant='contained'
-          >
-            Clear data
-          </Button>
         </Grid>
         <Grid item sm={6}>
           <Typography variant={'h4'} className={classes.title}>
@@ -102,7 +102,9 @@ const App = () => {
               data={data}
               renderers={renderers}
               cells={materialCells}
-              onChange={({ errors, data }) => setData(data)}
+              onChange={({ errors, data }) => {
+                setData(data);
+              }}
             />
           </div>
         </Grid>

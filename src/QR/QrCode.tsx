@@ -31,44 +31,45 @@ const QrCode = ({ value, updateValue }: QrProps) => {
   const [data, setData] = useState<string>('');
 
   return (
-    <div className='qr-container' id='#/properties/qr_code'>
-      <h2>
+    <div id='#/properties/qr_code'>
+      <h3>
         Last Scan:
         {selected}
-      </h2>
-
-      <button
-        onClick={() => {
-          setStartScan(!startScan);
-        }}
-      >
-        {startScan ? 'Stop Scan' : 'Start Scan'}
-      </button>
-      {startScan && (
-        <>
-          <select onChange={(e: any) => setSelected(e.target.value)}>
-            <option value={'environment'}>Back Camera</option>
-            <option value={'user'}>Front Camera</option>
-          </select>
-          <QrReader
-            constraints={{ facingMode: selected }}
-            onResult={(result: any, error: any) => {
-              if (!!result) {
-                const qrText = result?.getText();
-                setData(qrText);
-                setStartScan(false);
-                updateValue(qrText);
-              }
-              if (!!error) {
-                console.info(error);
-              }
-            }}
-            className='qr-code'
-            ViewFinder={ViewFinder}
-          />
-        </>
-      )}
-      {data !== '' && <p>{data}</p>}
+      </h3>
+      <div className='qr-container'>
+        <button
+          onClick={() => {
+            setStartScan(!startScan);
+          }}
+        >
+          {startScan ? 'Stop Scan' : 'Start Scan'}
+        </button>
+        {startScan && (
+          <>
+            <select onChange={(e: any) => setSelected(e.target.value)}>
+              <option value={'environment'}>Back Camera</option>
+              <option value={'user'}>Front Camera</option>
+            </select>
+            <QrReader
+              constraints={{ facingMode: selected }}
+              onResult={(result: any, error: any) => {
+                if (!!result) {
+                  const qrText = result?.getText();
+                  setData(qrText);
+                  setStartScan(false);
+                  updateValue(qrText);
+                }
+                if (!!error) {
+                  console.info(error);
+                }
+              }}
+              className='qr-code'
+              ViewFinder={ViewFinder}
+            />
+          </>
+        )}
+        {data !== '' && <p>{data}</p>}
+      </div>
     </div>
   );
 };

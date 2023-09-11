@@ -29,6 +29,9 @@
     },
     "qr_code": {
       "type": "string"
+    },
+    "img_input": {
+      "type": "string"
     }
   },
   "required": ["name", "due_date"]
