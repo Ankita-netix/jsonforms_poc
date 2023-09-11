@@ -26,6 +26,9 @@
     },
     "recurrence_interval": {
       "type": "integer"
+    },
+    "qr_code": {
+      "type": "string"
     }
   },
   "required": ["name", "due_date"]

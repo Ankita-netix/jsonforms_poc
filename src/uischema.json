@@ -50,6 +50,10 @@
       "options": {
         "multi": true
       }
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/qr_code"
     }
   ]
 }

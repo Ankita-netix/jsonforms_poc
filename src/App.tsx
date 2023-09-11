@@ -3,7 +3,6 @@ import { JsonForms } from '@jsonforms/react';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import logo from './logo.svg';
 import './App.css';
 import schema from './schema.json';
 import uischema from './uischema.json';
@@ -14,6 +13,8 @@ import {
 import RatingControl from './RatingControl';
 import ratingControlTester from './ratingControlTester';
 import { makeStyles } from '@mui/styles';
+import qrControlTester from './QR/qrControlTester';
+import QrControl from './QR/QrControl';
 
 const useStyles = makeStyles({
   container: {
@@ -47,12 +48,14 @@ const initialData = {
   done: true,
   recurrence: 'Daily',
   rating: 3,
+  qrCode: '',
 };
 
 const renderers = [
   ...materialRenderers,
   //register custom renderers
   { tester: ratingControlTester, renderer: RatingControl },
+  { tester: qrControlTester, renderer: QrControl },
 ];
 
 const App = () => {
@@ -66,14 +69,6 @@ const App = () => {
 
   return (
     <Fragment>
-      <div className='App'>
-        <header className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-          <h1 className='App-title'>Welcome to JSON Forms with React</h1>
-          <p className='App-intro'>More Forms. Less Code.</p>
-        </header>
-      </div>
-
       <Grid
         container
         justifyContent={'center'}

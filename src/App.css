@@ -26,6 +26,15 @@ html {
   font-size: large;
 }
 
+.qr-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.qr-code {
+  width: 500px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
